@@ -1,6 +1,6 @@
 <?php
 
-namespace Rockbuzz\LaraOrders;
+namespace Rockbuzz\LaraCW;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider as SupportServiceProvider;
@@ -19,6 +19,6 @@ class ServiceProvider extends SupportServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/orders.php', 'orders');
+        $this->mergeConfigFrom(__DIR__ . '/../config/cw.php', 'cw');
     }
 }
