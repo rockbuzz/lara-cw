@@ -1,8 +1,8 @@
-# Lara Orders
+# Lara CW
 
-Order management
+Api Cloudways
 
-<p><img src="https://github.com/rockbuzz/lara-orders/workflows/Main/badge.svg"/></p>
+<p><img src="https://github.com/rockbuzz/lara-cw/workflows/Main/badge.svg"/></p>
 
 ## Requirements
 
@@ -11,70 +11,37 @@ PHP >=7.4
 ## Install
 
 ```bash
-$ composer require rockbuzz/lara-orders
+$ composer require rockbuzz/lara-cw
 ```
-
-```php
-$ php artisan vendor:publish --provider="Rockbuzz\LaraOrders\ServiceProvider" --tag="migrations"
-```
-
-```php
-$ php artisan migrate
-```
-
-Add the `HasOrder` trait to the template for which you will be ordering
 
 ## Usage
 
-```php
-use Rockbuzz\LaraOrders\Transaction;
-use Rockbuzz\LaraOrders\Models\Order;
-use Rockbuzz\LaraOrders\Models\OrderCoupon;
-use Rockbuzz\LaraOrders\Traits\HasOrder;
-
-class YourBuyer
-{
-    use HasOrder
-}
-```
+.env
 
 ```php
-$buyer->orders(): MorphMany;
 
-$buyer->createOrder(array $notes = []): Order;
+// Define the deployment environment, default: staging
+CW_ENV=
 
-$buyer->orderById(int $id): ?Order;
+// Defines the uri and middleware that webhooks will use, default: _deploy
+CW_DEPLOY_URI=
 
-$buyer->orderByUuid(string $uuid): ?Order;
+// Set authentication and repository values
+CW_API_KEY=
+CW_API_URL=
+CW_EMAIL=
+CW_SERVER_ID=
+CW_APP_ID=
+CW_DEPLOY_PATH=
+CW_GIT_URL=
+CW_BRANCH_NAME=
 ```
+
+## Optional
 
 ```php
-$order->buyer(): BelongsTo;
-
-$order->coupon(): BelongsTo;
-
-$order->applyCoupon(OrderCoupon $coupon);
-
-$order->items(): HasMany;
-
-$order->total; //98.99
-
-$order->totalInCents; //9899
-
-$order->totalWithCoupon; //88.99
-
-$order->totalWithCouponInCents; //8899
-
-$order->transactions(): HasMany;
+$ php artisan vendor:publish --provider="Rockbuzz\LaraCW\ServiceProvider" --tag="config"
 ```
-- Events
-
-```php
-Rockbuzz\LaraOrders\Events\OrderCreated::class
-Rockbuzz\LaraOrders\Events\OrderTransactionCreated::class
-Rockbuzz\LaraOrders\Events\CouponApplied::class
-```
-
 ## License
 
-The Lara Orders is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Lara CW is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

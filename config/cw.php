@@ -1,11 +1,13 @@
 <?php
 
 return [
-
+    // Turn auto deploy on or off
     'status' => env('CW_ENABLED', true),
 
-    'env' => [env('CW_ENV', 'staging')],
+    // Define the deployment environment
+    'env' => env('CW_ENV', 'staging'),
 
+    // Defines the uri and middleware that webhooks will use
     'routes' => [
         'index' => [
             'uri' => env('CW_DEPLOY_URI', '_deploy'),
@@ -13,6 +15,7 @@ return [
         ]
     ],
 
+    // Set authentication and repository values
     'api_key' => env('CW_API_KEY'),
 
     'api_url' => env('CW_API_URL'),

@@ -88,6 +88,6 @@ class DeployController extends Controller
 
     protected function hasDeploy(): bool
     {
-        return config('cw.status') && array_key_exists(config('app.env'), config('cw.env'));
+        return config('cw.status') && config('app.env') === config('cw.env');
     }
 }
