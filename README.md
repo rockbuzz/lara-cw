@@ -6,7 +6,7 @@ Api Cloudways
 
 ## Requirements
 
-PHP >=7.4
+PHP >=7.3
 
 ## Install
 
@@ -19,6 +19,8 @@ $ composer require rockbuzz/lara-cw
 .env
 
 ```php
+ // Turn auto deploy on or off, default: true
+CW_ENABLED
 
 // Define the deployment environment, default: staging
 CW_ENV=
@@ -35,6 +37,25 @@ CW_APP_ID=
 CW_DEPLOY_PATH=
 CW_GIT_URL=
 CW_BRANCH_NAME=
+```
+
+```php
+<?php
+
+namespace App\Http\Middleware;
+
+use Symfony\Component\HttpFoundation\Cookie;
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
+
+class VerifyCsrfToken extends Middleware
+{
+    protected $except = [
+        config('cw.deploy_uri')
+    ];
+
+    ...
+}
 ```
 
 ## Optional
