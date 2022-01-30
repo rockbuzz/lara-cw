@@ -39,6 +39,8 @@ CW_GIT_URL=
 CW_BRANCH_NAME=
 ```
 
+add uri in csrf middleware
+
 ```php
 <?php
 
