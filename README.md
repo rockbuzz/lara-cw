@@ -56,7 +56,7 @@ class VerifyCsrfToken extends Middleware
 
     public function __construct()
     {
-        $this->except += config('cw.deploy_uri');
+        $this->except = array_merge($this->except, [config('cw.deploy_uri')]);
     }
 
     //...
