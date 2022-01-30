@@ -25,7 +25,7 @@ CW_ENABLED
 // Define the deployment environment, default: staging
 CW_ENV=
 
-// Defines the uri and middleware that webhooks will use, default: _deploy
+// Defines the uri that webhooks will use, default: _deploy
 CW_DEPLOY_URI=
 
 // Set authentication and repository values
@@ -52,11 +52,14 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
 
 class VerifyCsrfToken extends Middleware
 {
-    protected $except = [
-        config('cw.deploy_uri')
-    ];
+    //... 
 
-    ...
+    public function __construct()
+    {
+        $this->except += config('cw.deploy_uri');
+    }
+
+    //...
 }
 ```
 
