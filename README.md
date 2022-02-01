@@ -25,7 +25,7 @@ CW_ENABLED
 // Define the deployment environment, default: staging
 CW_ENV=
 
-// Defines the uri that webhooks will use, default: _deploy
+// Define the uri that webhooks will use, default: _deploy
 CW_DEPLOY_URI=
 
 // Set authentication and repository values
