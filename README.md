@@ -60,7 +60,7 @@ class VerifyCsrfToken extends Middleware
     {
         parent::__construct($app, $encrypter);
 
-        $this->except = array_merge($this->except, [config('cw.deploy_uri')]);
+        $this->except = array_merge($this->except, [config('cw.routes.index.uri')]);
     }
 
     //...
