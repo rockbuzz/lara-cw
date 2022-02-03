@@ -30,5 +30,22 @@ return [
 
     'git_url' => env('CW_GIT_URL'),
 
-    'branch_name' => env('CW_BRANCH_NAME')
+    'branch_name' => env('CW_BRANCH_NAME'),
+
+    // Set commands after deploy
+    'composer' => [
+        'install', 
+        '--no-cache', 
+        '--no-interaction'
+    ],
+
+    'artisan' => [
+        'migrate --force --no-interaction',
+        'cache:clear',
+        'route:cache',
+        'view:clear',
+        'config:clear',
+        'clear-compiled',
+        'optimize'        
+    ]
 ];

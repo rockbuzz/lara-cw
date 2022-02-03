@@ -47,7 +47,18 @@ class DeployController extends Controller
         );
 
         try {
-            Artisan::call('cache:clear-all');
+            // composer exec
+            app()->make(Composer::class)
+                ->setWorkingPath(base_path())
+                ->run(config('cw.composer'));
+
+            // artisan exec
+            collect(config('cw.artisan'))
+                ->each(function(string $commant) { 
+                    Artisan::call($commant);
+                    Log::info("Comando $commant executado");
+                }
+            );
         } catch (\Exception $exception) {
             Log::error($exception);
         }
@@ -90,4 +101,5 @@ class DeployController extends Controller
     {
         return config('cw.status') && config('app.env') === config('cw.env');
     }
+
 }
