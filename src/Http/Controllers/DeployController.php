@@ -49,9 +49,11 @@ class DeployController extends Controller
 
         try {
             // composer exec
-            app()->make(Composer::class)
-                ->setWorkingPath(base_path())
-                ->run(config('cw.composer'));
+            Log::info(
+                app()->make(Composer::class)
+                    ->setWorkingPath(base_path())
+                    ->run(config('cw.composer'))
+            );
 
             // artisan exec
             collect(config('cw.artisan'))
