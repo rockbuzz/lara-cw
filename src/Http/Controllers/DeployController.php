@@ -4,6 +4,7 @@ namespace Rockbuzz\LaraCW\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\{Artisan, Log};
+use Rockbuzz\LaraCW\Composer;
 
 class DeployController extends Controller
 {
