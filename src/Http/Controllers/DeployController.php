@@ -11,7 +11,7 @@ class DeployController extends Controller
     public function index()
     {
         if ($this->hasDeploy()) {
-            
+
             $tokenResponse = $this->getTokenResponse();
 
             $data = $this->callCloudWaysAPI(
@@ -26,6 +26,8 @@ class DeployController extends Controller
                     'deploy_path' => config('cw.deploy_path')
                 ]
             );
+
+            sleep(5);
 
             app()->make(Composer::class)
                 ->setWorkingPath(base_path())
@@ -54,46 +56,6 @@ class DeployController extends Controller
                 'api_key' => config('cw.api_key')
             ]
         );
-    }
-
-    private function pull($accessToken)
-    {
-        try {
-
-            $data = $this->callCloudWaysAPI(
-                'POST',
-                '/git/pull',
-                $accessToken,
-                [
-                    'server_id' => config('cw.server_id'),
-                    'app_id' => config('cw.app_id'),
-                    'git_url' => config('cw.git_url'),
-                    'branch_name' => config('cw.branch_name'),
-                    'deploy_path' => config('cw.deploy_path')
-                ]
-            );
-
-        } catch (\Exception $exception) {
-
-            Log::error($exception);
-
-            return response()->json($exception->getMessage(), 500);
-
-        } finally {
-
-            app()->make(Composer::class)
-                ->setWorkingPath(base_path())
-                ->run(config('cw.composer'));
-
-            collect(config('cw.artisan'))
-                ->each(function(string $commant) { 
-                    Artisan::call($commant);
-                    Log::info("Comando $commant executado");
-                }
-            );
-        }
-
-        return response()->json($data);
     }
 
     private function callCloudwaysAPI($method, $url, $accessToken, $post = [])
