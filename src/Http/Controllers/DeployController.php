@@ -34,36 +34,39 @@ class DeployController extends Controller
 
     private function pull($accessToken)
     {
-        $jsonOutput = $this->callCloudWaysAPI(
-            'POST',
-            '/git/pull',
-            $accessToken,
-            [
-                'server_id' => config('cw.server_id'),
-                'app_id' => config('cw.app_id'),
-                'git_url' => config('cw.git_url'),
-                'branch_name' => config('cw.branch_name'),
-                'deploy_path' => config('cw.deploy_path')
-            ]
-        );
-
         try {
-            // composer exec
-            Log::info(
-                app()->make(Composer::class)
-                    ->setWorkingPath(base_path())
-                    ->run(config('cw.composer'))
+
+            $jsonOutput = $this->callCloudWaysAPI(
+                'POST',
+                '/git/pull',
+                $accessToken,
+                [
+                    'server_id' => config('cw.server_id'),
+                    'app_id' => config('cw.app_id'),
+                    'git_url' => config('cw.git_url'),
+                    'branch_name' => config('cw.branch_name'),
+                    'deploy_path' => config('cw.deploy_path')
+                ]
             );
 
-            // artisan exec
+        } catch (\Exception $exception) {
+
+            Log::error($exception);
+
+            return response()->json($exception->getMessage(), 500);
+
+        } finally {
+
+            app()->make(Composer::class)
+                ->setWorkingPath(base_path())
+                ->run(config('cw.composer'));
+
             collect(config('cw.artisan'))
                 ->each(function(string $commant) { 
                     Artisan::call($commant);
                     Log::info("Comando $commant executado");
                 }
             );
-        } catch (\Exception $exception) {
-            Log::error($exception);
         }
 
         return response()->json($jsonOutput);
