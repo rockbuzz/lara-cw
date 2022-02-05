@@ -8,7 +8,7 @@ class Composer extends \Illuminate\Support\Composer
     {
         // findComposer() resolves to composer's binary
         // $command is an array that looks like ['composer', 'some-composer-command']
-        $command = array_merge($this->findComposer(), $command);
+        $command = array_merge($this->findComposer(), array_filter($command));
 
         // we then pass the command array to getProcess()
         // getProcess() returns a Symfony Process() instance, which runs the command for us in the shell
