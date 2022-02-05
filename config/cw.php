@@ -34,18 +34,10 @@ return [
 
     // Set commands after deploy
     'composer' => [
-        'install', 
-        '--no-cache', 
-        '--no-interaction'
+        '--version'
     ],
 
     'artisan' => [
-        'migrate --force --no-interaction',
-        'cache:clear',
-        'route:cache',
-        'view:clear',
-        'config:clear',
-        'clear-compiled',
-        'optimize'        
+        '--version'      
     ]
 ];
