@@ -42,7 +42,7 @@ class DeployController extends Controller
 
             return response()->json($data);
         }
-        return response()->json(['message' => 'Can\'t deploy'], 500);
+        return response()->json(['message' => 'Can\'t deploy']);
     }
 
     private function getTokenResponse()
